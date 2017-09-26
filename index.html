@@ -1,0 +1,19 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>receitaws2csv</title>
+    </head>
+    <body>
+        <h1>Entre com a lista de CNPJs (um por linha):</h1>
+        <form>
+            <textarea id="cnpjs" placeholder="Cole aqui os CNPJs" cols="100"></textarea><br>
+            <button type="submit" id="btn_form">Enviar</button>
+        </form>
+        <h2>Resultado:</h2>
+        <textarea id="result" cols="200" rows="11"></textarea><br>
+        <button id="download">Baixar CSV</button>
+        <script src="script.js"></script>
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    </body>
+</html>
