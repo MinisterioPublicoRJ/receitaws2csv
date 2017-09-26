@@ -39,7 +39,7 @@ function fetchCnpjs(cnpjsArray) {
 
 function fetchCnpj(cnpj, i) {
     // craft URL
-    let url = `${RECEITAWS_URL}${cnpj}`
+    let url = `${RECEITAWS_URL}${safeCnpj(cnpj)}`
 
     // make call
     window.jsonp(url, function(res) {
@@ -51,6 +51,17 @@ function fetchCnpj(cnpj, i) {
             window.setTimeout(parseCnpjs, 1000)
         }
     })
+}
+
+function safeCnpj(cnpj) {
+    // remove formatting
+    let _cnpj = cnpj.trim().replace(/\//g, '').replace(/\./g, '').replace(/\-/g, '')
+
+    // pad zeroes
+    let padZeroes = ('00000000000000'+_cnpj)
+    _cnpj = padZeroes.substring(padZeroes.length-14, padZeroes.length)
+
+    return _cnpj
 }
 
 function parseCnpjs() {
