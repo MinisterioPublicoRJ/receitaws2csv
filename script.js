@@ -1,4 +1,5 @@
 const RECEITAWS_URL = 'https://www.receitaws.com.br/v1/cnpj/'
+const WAIT_BETWEEN_API_CALLS = 30000
 let cnpjData, csv
 let numberOfRequests = 0
 
@@ -34,12 +35,19 @@ function fetchCnpjs(cnpjsArray) {
     numberOfRequests = cnpjsArray.length
 
     // call for every cnpj
-    cnpjsArray.map((cnpj, i) => fetchCnpj(cnpj, i))
+    for (let i=0, l=cnpjsArray.length; i<l; i++) {
+        window.setTimeout(() => {
+            fetchCnpj(cnpjsArray[i], i)
+        }, i * WAIT_BETWEEN_API_CALLS)
+    }
+    // cnpjsArray.map((cnpj, i) => fetchCnpj(cnpj, i))
 }
 
 function fetchCnpj(cnpj, i) {
     // craft URL
     let url = `${RECEITAWS_URL}${safeCnpj(cnpj)}`
+
+    console.log('API CALL ' + (i+1) + '/' + numberOfRequests)
 
     // make call
     window.jsonp(url, function(res) {
